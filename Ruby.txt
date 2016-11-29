@@ -1,0 +1,501 @@
+Ruby
+====
+
+##########
+I. Intro
+##########
+
+Never use quotation marks (' or ") with booleans, or Ruby will think you're talking about a string (a word or phrase) instead of a value that can be true or false. It's also important to remember that Ruby is case-sensitive.
+
+* Var
+
+To create a var, no need to put the var attribute, just type it. A var can be a string, boolean or number.
+
+	name = "Eric"
+	name = 25
+	name = true
+
+1. Method
+__________
+
+* .length
+
+Check the length of a string or a number i.e : for credit card, passwords, etc…
+Use double brackets around the string i.e : "Vandenthoren".length
+
+* .reverse
+
+Called like .length but split the word… Useful to sorting list.
+
+* .upcase & .downcase
+
+The thing is in the method…
+
+* .capitalize
+Capitalize the first letter of the word
+!!! Exception : if you have save a value in a var, you might use capitalize! 
+ex : answer = 	gets.champ
+		answer2 = answer.capitalize
+		answer.capitalize!
+
+* .include?
+It will check if the var include something and give a true/false
+ex: if string_to_check.include? "substring"
+
+* .gsub
+Global SUBstitution. You can change something in your var/code.
+
+string_to_change.gsub!(/s/, "th")
+!!! No space between .gsub and () !!!
+
+* .split
+it takes in a string and returns an array.
+ex: text.split(",")
+tells Ruby to split up the string text whenever it sees a comma.
+
+* .sort_by
+function that return an array of arrays
+
+!!! You can call different method on the same var like this : var.method1.method2.method3 !!!
+
+When you want to modify the var directly put an ! at the end of the function. Otherwise it will create a copy of the var.
+
+2. Comment
+__________
+
+To write Single-line comment use #.
+For multiple-line use : =begin =end
+
+3. Naming Conventions
+_____________________
+
+The variables should start with a lowercase letter and words should be separated by underscores, like counter and masterful_method.
+
+4. Formating a form
+____________________
+
+If you want to format a form, you have to create the form.
+First, print a question like this :
+print "What's your first name ?"
+
+After, to get the value of the answer :
+first_name = gets.chomp
+
+gets give you the value and chomp just help to delete the blank line that the gets function create.
+
+If you want to formate the form, just use the different Method (capitalize, uppercase,etc…)
+
+After, to reuse the information you need to use #{NameVar}
+puts "Your first name is #{first_name} !"
+
+#########################
+II. Control Flow in Ruby
+#########################
+
+1. If
+______
+
+Work as every if you know. There is no need to get a blank after an if but user create a indentation and a blank.
+
+Ex :
+
+if 1 < 2
+  print "I'm getting printed because one is less than two!"
+end
+
+!!!! An if is always followed by a end !!!!
+
+For the multiple choice use if/elsif/else
+
+2. Unless
+__________
+
+Check if something is false. 
+
+Ex :
+
+unless hungry
+  # Write some sweet programs
+else
+  # Have some noms
+end
+
+3. Equal or not ?
+__________________
+
+Use == for equal and != for different
+
+4. Comparator
+_____________
+
+< / > / <= / >=
+
+We can also use and (&&), or (||), not (!).
+
+5. case
+_______
+
+If you don’t want to write an infinite of if else if, use case. 
+ex :
+case language
+when "JS"
+  puts "Websites!"
+when "Python"
+  puts "Science!"
+when "Ruby"
+  puts "Web apps!"
+else
+  puts "I don't know!"
+end
+
+########################
+III. Loops & Iterators
+########################
+
+1. While & until
+
+
+While work like it has always worked…
+!!! Executes code while conditional is true. !!!
+
+Until is the same as while but it end at the number.
+!!! Executes code while conditional is false. !!!
+
+To increment write i += 1
+
+2. For
+______
+
+To use if you know how much time you want to loop.
+Ex:
+For num in 1…10
+	puts num
+End
+
+It say "For the variable num in the range 1 to 10, do the following." The following was to print "#{num}", so as num took on the values of 1 to 9, one at a time, those values were printed to the console.
+
+… Don’t include the bigest number 1…10 count to 9
+.. Include the biggest number 1..10 count to 10
+
+3. Loop Method
+______________
+
+ex: 
+i = 0
+loop do
+  i += 1
+  print "#{i}"
+  break if i > 5
+end
+
+loop until i = 4 ! if you don’t break it, it will be infinite…
+
+4. Next
+_______
+
+We can use it to exclude some part of the result.
+ex:
+for i in 1..5
+  next if i % 2 == 0
+  print i
+end
+
+print out the pair number, the result is 5/3/1.
+
+5. Each
+_______
+
+method which can apply an expression to each element of an object, one at a time.
+
+object.each do |item| #do something to each item and end.
+
+6. Times
+_________
+
+The .times method is like a super compact for loop: it can perform a task on each item in an object a specified number of times.
+ex:
+10.times { print "Chunky bacon!" }
+
+Print 10 times Chunky bacon!
+
+######################
+IV. Arrays and Hashes
+######################
+
+We can have array of number but also of boolean and strings !
+We can also create multidimensional array = array of an array.
+
+We know that arrays are indexed with numbers that start with 0 and go up to the array's length minus one. (Think about it: an array with four elements has the indices 0, 1, 2, and 3.)
+
+But what if we want to use numeric indices that don't go in order from 0 to the end of the array? What if we don't want to use numbers as indices at all? We'll need a new array structure called a hash.
+
+ex: 
+hash = {
+  key1 => value1,
+  key2 => value2,
+  key3 => value3
+}
+
+Values are assigned to keys using =>. You can use any Ruby object for a key or value.
+
+You can also create a hash using Hash.new, like so: my_hash = Hash.new
+
+ex : 
+pets = Hash.new
+pets["Stevie"] = "cat"
+
+Adds the key "Stevie" with the value "cat" to the hash
+
+# Iterations
+_____________
+
+To iterate in the array && hash we will use .each
+
+numbers = [1, 2, 3, 4, 5]
+numbers.each { |element| puts element }
+
+In the example above, we create an array called numbers with 5 elements.
+Then we say, "Take this array and for each element, print it to the console." As usual, we can use any placeholder name for the bit between two | | characters.
+
+For mutli array : 
+s.each do | sub_array |
+  sub_array.each do | y |
+    puts y
+  end
+end
+
+or :
+
+s.each{
+sub_array.each { |y| puts y}
+}
+
+for hash :
+restaurant_menu = {
+  "noodles" => 4,
+  "soup" => 3,
+  "salad" => 2
+}
+
+restaurant_menu.each do |item, price|
+  puts "#{item}: #{price}"
+end
+
+###########
+V. Methods
+###########
+
+Methods are defined using the keyword def (short for "define"). Methods have three parts:
+
+1. The header, which includes the def keyword, the name of the method, and any arguments the method takes. (We'll get to arguments in the next section)
+2. The body, which is the code block that describes the procedures the method carries out. The body is indented two spaces by convention (as with for, if, elsif, and else statements)
+3. The method ends with the end keyword.
+ex:
+def welcome
+  puts "Welcome to Ruby!"
+end
+
+to call a method just write it’s name
+ex:
+welcome
+
+with arguments : 
+def square(n)
+  puts n ** 2
+end
+square(12)
+
+1. Splat argument
+________________
+
+Splat arguments are arguments preceded by a *, which signals to Ruby: "Hey Ruby, I don't know how many arguments there are about to be, but it could be more than one."
+
+2. Blocks
+_________
+
+Most methods that you've worked with have defined names that either you or someone else gave them (i.e. [array].sort(), "string".downcase(), and so on). You can think of blocks as a way of creating methods that don't have a name. (These are similar to anonymous functions in JavaScript or lambdas in Python.)
+
+Blocks can be defined with either the keywords do and end or with curly braces ({}).
+
+There are some differences between blocks and methods, however.
+
+Check out the code in the editor. The capitalize method capitalizes a word (see the Hint for how this is done), and we can continually invoke the capitalize method by name. We can capitalize("matz"), capitalize("eduardo"), or any string we like to our hearts' content.
+
+However, the block that we define (following .each) will only be called once, and in the context of the array that we are iterating over. It appears just long enough to do some work for each, then vanishes into the night.
+
+A method can take a block as a parameter. That's what .each has been doing this whole time: taking a block as a parameter and doing stuff with it! You just didn't notice because we didn't use the optional parentheses. We are sneaky.
+
+Passing a block to a method is a great way of abstracting certain tasks from the method and defining those tasks when we call the method. Abstraction is an important idea in computer science, and you can think of it as meaning "making something simpler." Imagine if when you wanted to house hunt, you had to say, "Honey, let's go look at configurations of concrete, plywood, and vinyl siding." That'd be crazy! Just like saying "house" simplifies listing its components, using a block to define the task you want the method (like .each) to do simplifies the task at hand.
+
+3. Sorting
+_________
+
+* .sort!
+
+sort an array in chronological order or alphabetical, etc…
+
+* combined comparison operator 
+
+The combined comparison operator looks like this: <=>. It returns 0 if the first operand (item to be compared) equals the second, 1 if first operand is greater than the second, and -1 if the first operand is less than the second.
+
+
+to sort from Z-A you can do :
+books.sort! {|book1, book2| book2 <=> book1}
+
+#####################
+VI. Hashes & Symbols
+#####################
+
+Hashes is composed from keys and values. Key must be unique but value can repeat.
+Creating hashes : 
+new_hash = { "one" => 1 }
+or :
+new_hash = Hash.new
+
+1. nil
+_______
+What happens if you try to access a key that doesn't exist, though?
+
+In many languages, you'll get an error of some kind. Not so in Ruby: you'll instead get the special value nil.
+
+Along with false, nil is one of two non-true values in Ruby. (Every other object is regarded as "truthy," meaning that if you were to type if 2 or if "bacon", the code in that if statement would be run.)
+
+It's important to realize that false and nil are not the same thing: false means "not true," while nil is Ruby's way of saying "nothing at all."
+
+You can specify your own nil by using : my_hash = Hash.new("Trady Blix")
+
+* .nil?
+Check is something has a value
+
+2. Symbols
+__________
+
+Symbols pop up in a lot of places in Ruby, but they're primarily used either as hash keys or for referencing method names.
+Symbol are mainly use in ruby instead of string because the value of a symbol is always unique. 
+To create a symbol, use :
+:my_symbol # Do this instead.
+
+The « : » is really important !
+
+Symbols make good hash keys for a few reasons:
+
+1 They're immutable, meaning they can't be changed once they're created;
+2 Only one copy of any symbol exists at a given time, so they save memory;
+3 Symbol-as-keys are faster than strings-as-keys because of the above two reasons.
+
+* .to_s & .to_sym
+Convert between string and symbols
+
+* .intern
+The same as to_sym
+
+Beware !!
+_________
+
+in Ruby 1.9, we write hashes rocket like this :
+movies = {
+inception: « good »}
+
+the old version was like : movies = { :inception => « good »}
+
+* .select
+Use to select things in an hash…
+
+* .each_key & .each_value
+
+######################
+VII. Notations in Ruby
+######################
+
+* if & unless
+
+=> puts "It's true!" if true
+=> puts "It's false! » unless false
+
+ternary expression for if : boolean ? Do this if true: Do this if false
+ex : puts 3 < 4 ? "3 is less than 4!" : "3 is not less than 4."
+
+* case
+become : 
+case language
+  when "JS" then puts "Websites!"
+  when "Python" then puts "Science!"
+  when "Ruby" then puts "Web apps!"
+  else puts "I don't know!"
+end
+
+* ||=
+Set a value if there isn’t one assigned otherwise do nothing…
+
+* return
+For instance, if you don't tell a JavaScript function exactly what to return, it'll return undefined. For Python, the default return value is None. But for Ruby, it's something different: Ruby's methods will return the result of the last evaluated expression.
+
+####################
+VIII. Proc & lambda 
+####################
+
+Proc can be used to save a block and use it when we want.
+
+creating : 
+cube = Proc.new { |x| x ** 3 }
+
+calling :
+[1, 2, 3].collect!(&cube)
+# ==> [1, 8, 27]
+[4, 5, 6].map!(&cube)
+
+You can also use .call
+
+We can also use lambda that we create like :
+lambda { |x| x}
+
+difference :
+First, a lambda checks the number of arguments passed to it, while a proc does not. This means that a lambda will throw an error if you pass it the wrong number of arguments, whereas a proc will ignore unexpected arguments and assign nil to any that are missing.
+
+Second, when a lambda returns, it passes control back to the calling method; when a proc returns, it does so immediately, without going back to the calling method.
+
+########
+IX. OOP
+########
+
+* Class
+
+class NewClass
+  # Class magic here
+end
+
+By convention, class names start with a capital letter and use CamelCase.
+In Ruby, we use @ before a variable to signify that it's an instance variable. This means that the variable is attached to the instance of the class. For example,
+
+ex : 
+class Car
+  def initialize(make, model)
+    @make = make
+    @model = model
+  end
+end
+
+kitt = Car.new("Pontiac", "Trans Am")
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Recall that instance variables begin with an @. This isn't just a Ruby convention—it's part of the syntax! Always start your instance variables with @.
+
+Class variables are like instance variables, but instead of belonging to an instance of a class, they belong to the class itself. Class variables always start with two @s, like so: @@files.
+
+Global variables can be declared in two ways. The first is one that's already familiar to you: you just define the variable outside of any method or class, and voilà! It's global. If you want to make a variable global from inside a method or class, just start it with a $, like so: $matz.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+* Public & Private !
+
+class ClassName
+  # Some class stuff
+
+  public
+  # Public methods go here
+  def public_method; end
+
+  private
+  # Private methods go here
+  def private_method; end
+end

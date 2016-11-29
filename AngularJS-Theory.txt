@@ -1,0 +1,162 @@
+AngularJS theory
+================
+
+Afin d'utiliser AngularJS, il faudra appeler la librairie dans le <head> du code.
+
+* Créer une app
+
+Dans le dossier js, créer un fichier app.js, ajouter la ligne : 
+	var app = angular.module(’nomApp’, []);
+Entre guillemets, on rentre le nom de la nouvelle application AngularJS.
+Ensuite, dans le HTML, il faut ajouter ng-app="nomApp" à la balise <body>.
+
+* Ajouter un controller
+
+Dans le dossier js, créer un dossier controllers, y créer un fichier MainController.js. On ajoutera tous les controllers dans ce fichier.
+Pour créer un controller :
+	app.controller('NomDuController', ['$scope', 
+		function($scope){
+			$scope.element = 'contenu'
+	}]);
+
+Le $scope permet de relier les éléments du controller dans l'html grâce à l'appel de ng-controller="NomDuController" sur une balise <div class="main> et ensuite, on peut appeller ces éléments grâce à {{element}}
+
+Il est possible de créer un tableau d'éléments.
+	$scope.tableau = [
+		{
+		element:'contenu',
+		element1:'contenu1',
+		}
+		
+	];
+
+° Appel aux infos
+Il est possible de formater les infos :
+	Pour avoir un prix, en utilisant : element.price | currency
+	La date peut avoir plusieurs formats : element.datetime | date
+	https://docs.angularjs.org/api/ng/filter/date
+
+° Utiliser {{}} pour avoir la source de l'image
+	<img ng-src="{{element.img}}">
+
+° Parcours d'un tableau
+Lorsqu'il y a plusieurs éléments dans un tableau, au lieu de retaper en dur tout le HTML, il est possible d'utiliser une balise ng-repeat.
+	<div class="container" ng-repeat="item in tableau">
+Il faudra ensuite utilise item pour faire appel aux éléments dans le $scope.tableau. {{ item.element }}
+
+* Création d'un système de "Like" au click
+
+On peut créer des interactions au click. Il suffit pour cela de créer dans le controller un $scope contenant une fonction qui décrit ce qui se passe au click.
+	$scope.plusOne = function(index){
+  		$scope.products[index].likes += 1;
+  	};
+Cette fonction permettra d'ajouter un like si l'on clique sur le bouton concerné. Il faudra ajouter l'appel à la fonction dans l'Html. 
+	<button ng-click="plusOne($index)"> {{product.likes}}</button>
+
+* Directives 
+
+Les directives permettent de créer des templates et de les réutiliser dans notre futur code.
+
+Tout d'abord, il faut créer un nouveau JS dans un dossier directives. Et taper le code suivant :
+
+	app.directive('appInfo', function() { 
+  		return { 
+    			restrict: 'E', 
+    			scope: { 
+      				info: '=' 
+    			}, 
+    		templateUrl: 'js/directives/appInfo.html' 
+  		}; 
+	});
+
+Grâce à cela, on retourne un objet avec des options :
+	1. restrict spécifie comme l'objet sera utilisé. 'E' spécifie que l'on va créer un nouvel objet HTML.
+	2. scope spécifie que l'on va passer des infos dans cette directive grâce à 'info'. Le "=" demande à la directive de chercher un attribut dans la balise <app-info> (qui correspond au nom de notre directive). Les data qui seront dans info pourront dés lors être utilisée dans templateUrl !
+	3. templateUrl spécifie le html que l'on va utiliser pour montrer les infos du scope.info. C'est le template html donc.
+	4. link utilisé pour créer de l'interaction avec l'utilisateur. Il prend 3 paramètres :
+		1. scope, réfère scope de la directive. Tout ce qui sera attaché pourra être utilisé dans le template de la directive.
+		2. element se réfère à l'élément HTML de la directive.
+		3. attrs contient les attributs de l'élément.
+	
+	exemple : création d'un toggle bouton Installer/Désinstaller
+
+		app.directive('installApp', function() {
+  			return {
+    				restrict: 'E',
+    				scope: {},
+    			templateUrl: 'js/directives/installApp.html',
+    
+    			link: function(scope, element, attrs) {
+      				scope.buttonText = "Install",
+      				scope.installed = false,
+
+      				scope.download = function() {
+        				element.toggleClass('btn-active');
+        				if(scope.installed) {
+          					scope.buttonText = "Install";
+          					scope.installed = false;
+        				} else {
+          					scope.buttonText = "Uninstall";
+          					scope.installed = true;
+        				}
+      				}
+    			}
+  			};
+		});
+		
+		Utilisé comme ceci dans le code HTML : 
+			<button class="btn btn-active" ng-click="download()"> 
+  				{{ buttonText }} 
+			</button>
+
+Dans le code Html, il faut appeler la balise <app-info info="app"> à l'endroit où l'on veut placer nos infos. S'il n'y a pas de scope dans la directive, il ne faut aucun attribut à la balise html.
+
+* Services
+
+Le services permet de connecter une base de donnée JSON à notre service. Pour ce faire, nous utilisons créons un nouveau fichier dans le dossier services, et on tape le code ci-dessous : 
+
+	app.factory('forecast', ['$http', function($http) { 
+  		return $http.get('https://s3.amazonaws.com/codecademy-content/courses/ltp4/forecast-api/forecast.json') 
+            	.success(function(data) { 
+              		return data; 
+            	}) 
+            	.error(function(err) { 
+              		return err; 
+            	}); 
+	}]);
+
+On ajoute "http" comme un attribut de forecast afin de pouvoir l'utiliser. Ensuite, on utilise un HTTP GET pour avoir les données du fichier qui s'affiche si c'est un succès au sinon, il nous affiche l'erreur.
+
+Il faudra ensuite ajouter les data au controller grâce à la ligne suivante et ajouter forecast (ou tout autre nom) comme une dépendance au controller : 
+	forecast.success(function(data) {
+    		$scope.fiveDay = data;
+  	});
+
+!!!! Attention, dans l'appel de la fonction du controller, il faudra ajouter le nom du services au donnée de la fonction et du controller !!!
+
+* Routing
+
+C'est un moyen de gérer une application ou un site qui a plusieurs pages. Pour utiliser route, il faudra appeler la librairie route afin de pouvoir l'utiliser dans le <head>. (<script src="https://code.angularjs.org/1.2.28/angular-route.min.js"></script>) et ajouter 'ngRoute' dans les attributs de l'application.
+
+Afin de créer une route, il faut taper le code suivant dans app.js :
+
+app.config(function($routeProvider){
+  $routeProvider
+    .when('/',{controller:'HomeController',templateUrl:'views/home.html'})
+    .when('/photos/:id',{controller:'PhotoController', templateUrl:'views/photo.html'})
+    .otherwise({redirectTo:'/'});
+});
+
+.when : On utilise le '/' pour créer une URL qui va rechercher ses informations dans le HomeController qui va utiliser le template home.html pour afficher quelque chose.
+Le second fait de même mais pour l'URL '/photos:id'. id correspondant à l'id de la photo…
+.otherwhise : Si l'utilisateur essaye d'accéder à une autre URL, il est redirigé vers '/' et donc vers home.html
+
+Afin d'utiliser l'id des photos, il faudra créer un nouveau controller avec le code suivant : 
+	app.controller('PhotoController', ['$scope', 'photos', '$routeParams', 		function($scope, photos, $routeParams) {
+  		photos.success(function(data) {
+    		$scope.detail = data[$routeParams.id];
+  		});
+	}]);
+
+Il faudra avoir accès à $routeParams afin de sortir l'id de la photo.
+

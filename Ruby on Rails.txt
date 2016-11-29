@@ -1,0 +1,95 @@
+Ruby on Rails
+=============
+http://guides.rubyonrails.org/getting_started.html
+
+##########
+I. Setup
+##########
+
+To create a new rails project type in command line :
+$ rails new NameOfProject
+$ bundle install
+$ rails server
+
+The first command create a new project, then we import the package to use in our app and finally we run a server to see what we are doing.
+
+We created a new controller named Pages. How did we do this?
+
+The rails generate controller Pages command generated a new controller named Pages. This created a file named app/controllers/pages_controller.rb.
+Inside the new Pages controller, we added a method called home. Methods in Rails controllers are also referred to as controller actions, so here we added the home action to the Pages controller.
+
+Then in the files config>routes.rb we can add some route like : get 'welcome' => 'pages#home'
+
+After that, you can work on the pages in the app folder. When you are done with your HTML/CSS etc… you can map the url in routes as : root ‘pages#home’
+So, the index of the website is your home page.
+
+To start a rail server to preview your work type: rails s -p 8080 -b 0.0.0.0
+
+#############
+II. Database
+#############
+
+1. The rails generate model command created a new model named Message. In doing so, Rails created two files:
+
+a model file in app/models/message.rb. The model represents a table in the database.
+a migration file in db/migrate/. Migrations are a way to update the database.
+2. Open the migration file in db/migrate/. The migration file contains a few things:
+
+The change method tells Rails what change to make to the database. Here it uses the create_table method to create a new table in the database for storing messages.
+Inside create_table, we added t.text :content. This will create a text column called content in the messages tables.
+The final line t.timestamps is a Rails command that creates two more columns in the messages table called created_at and updated_at. These columns are automatically set when a message is created and updated.
+3. The rake db:migrate command updates the database with the new messages data model.
+
+4. Finally the rake db:seed command seeds the database with sample data from db/seeds.rb.
+
+https://www.codecademy.com/articles/standard-controller-actions
+
+The file index.html.erb is a web template. Web templates are HTML files that contain variables and control flow statements. Rather than write the same HTML over and over again for each message, we can use web templates to loop through and display data from the database.
+
+In this case:
+
+<% @messages.each do |message| %> iterates through each message in @messages array. We created @messages in the Messages controller's index action.
+For each message, we use <%= message.content %> and <%= message.created_at %> to display its content and the time when it was created.
+The default web templating language in Rails is embedded Ruby, or ERB.
+
+
+- A model represents a table in the database.
+- A migration is a way to update the database with a new table, or changes to an existing table.
+- Rails provides seven standard controller actions for doing common things such as display and create data
+- Data can be displayed in the view using ERB web templating.
+- Data can be saved into the database using a web form.
+
+* Check
+
+Confirm that your email saved to the database. The Rails console is a useful tool to interact with Rails apps. We'll use it here to query the database.
+
+In the terminal, open a new tab by clicking the 
+Switch into your app's folder by typing cd innovation-cloud
+Start the Rails console by running
+$ rails console
+When you enter the Rails console, retrieve all emails in the database by running the query
+> Signup.all
+This query returns all emails in the database as an array. Your email should show up in the console output. 
+
+To exit the Rails console at any point, type Ctrl+D.
+
+###################
+III. Associations
+##################
+
+What did we just do?
+
+We created two models named Tag and Destinations.
+In the model files, we used the methods has_many and belongs_to define an association between Tag and Destination:
+
+has_many :destinations denotes that a single Tag can have multiple Destinations.
+belongs_to :tag denotes that each Destination belongs to a single Tag.
+The has_many / belongs_to pair is frequently used to define one-to-many relationships. A few examples are:
+
+a Library has many Books; a Book belongs to a Library
+an Album has many Photos; a Photo belongs to an Album
+a Store has many Products; a Product belongs to a Store
+
+#####################
+IV. Authentifications
+#####################
